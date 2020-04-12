@@ -46,6 +46,22 @@ cd edge\ detector/
 make 
 ```
 
-This will build the executable and to run the executable, follow the steps 
-- For Sobel edge detection, ``` ./output_sobel test_images/<name of image.raw> gradientX.raw gradientY.raw gradient_map.raw normalized_final.raw <height_image> <width_image> <no_of_channel> <threshold_value> ```
+This will build the executable and to run the executable, follow the steps  
+
+- For Sobel edge detection, ensure you know the width, height of the image and threshold in the range [0,1]. This code will also output the intermediate gradient outputs. 
+
+<***> = user values to be used. 
+
+``` 
+./output_sobel test_images/<name of image.raw> gradientX.raw gradientY.raw gradient_map.raw normalized_final.raw <height_image> <width_image> <no_of_channel> <threshold_value> 
+```
+Note - This code executes only RAW images. 
+
+- For Canny edge detection, ensure you know the low and high threshold value. 
+<***> = user values to be used.
+
+``` 
+./output_canny <low_threshold> <high_threshold> 
+```
+
 
