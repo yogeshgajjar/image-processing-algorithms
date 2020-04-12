@@ -26,3 +26,26 @@ data to be processed. It uses the calculus of variations – a technique that fi
 which optimizes a given functional. The optimal function in Canny’s detector is described
 by the sum of four exponential terms, but it can be approximated by the first derivative of
 a Gaussian.
+
+## Build Steps 
+
+### Dependencies 
+
+This program depends on the following software/libraries 
+
+- [OpenCV](https://opencv.org/) (computer vision library)
+  - Can be installed from [source](https://cv-tricks.com/installation/opencv-4-1-ubuntu18-04/) 
+
+### Build Steps 
+
+To build the program, follow the steps. 
+
+```
+git clone git@github.com:yogeshgajjar/image-processing-algorithms.git 
+cd edge\ detector/
+make 
+```
+
+This will build the executable and to run the executable, follow the steps 
+- For Sobel edge detection, ``` ./output_sobel test_images/<name of image.raw> gradientX.raw gradientY.raw gradient_map.raw normalized_final.raw <height_image> <width_image> <no_of_channel> <threshold_value> ```
+
