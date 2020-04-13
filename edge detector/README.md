@@ -53,7 +53,7 @@ This will build the executable and to run the executable, follow the steps
 <***> = user values to be used. 
 
 ``` 
-./output_sobel test_images/<name of image.raw> gradientX.raw gradientY.raw gradient_map.raw normalized_final.raw <height_image> <width_image> <no_of_channel> <threshold_value> 
+./output_sobel test_image/<name of image.raw> gradientX.raw gradientY.raw gradient_map.raw normalized_final.raw <height_image> <width_image> <no_of_channel> <threshold_value> 
 ```
 Note - This code executes only RAW images. 
 
@@ -69,10 +69,10 @@ Note - This code executes only RAW images.
 
 - For Sobel edge detection 
 
-![Original](/edge\ detector/test_images/Gallery.jpg)
+![Original](/edge detector/test_image/Gallery.jpg)
 
-![Sobel](/edge\ detector/sobel.png)
+![Sobel](/edge detector/sobel.png)
 
-![Canny](/edge\ detector/canny.jpg)
+![Canny](/edge detector/canny.jpg)
 
 
