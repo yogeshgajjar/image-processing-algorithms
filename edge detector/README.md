@@ -69,10 +69,10 @@ Note - This code executes only RAW images.
 
 The original image 
 
-![Original](test_image/Gallery.jpg?raw=true "Original")
+![Original](test_image/Gallery.jpg "Original")
 
-![Sobel](sobel.png)
+![Sobel](sobel.png "Sobel")
 
-![Canny](canny.jpg)
+![Canny](canny.jpg "Canny")
 
 
