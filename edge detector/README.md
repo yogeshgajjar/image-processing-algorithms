@@ -69,10 +69,10 @@ Note - This code executes only RAW images.
 
 - For Sobel edge detection 
 
-![Original](/edge detector/test_image/Gallery.jpg)
+![Original](edge detector/test_image/Gallery.jpg)
 
-![Sobel](/edge detector/sobel.png)
+![Sobel](edge detector/sobel.png)
 
-![Canny](/edge detector/canny.jpg)
+![Canny](edge detector/canny.jpg)
 
 
