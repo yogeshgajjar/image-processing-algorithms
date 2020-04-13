@@ -67,12 +67,13 @@ Note - This code executes only RAW images.
 
 ## Output 
 
-The original image 
-
+Original Image:
 ![Original](test_image/Gallery.jpg "Original")
 
+Sobel Output: 
 ![Sobel](sobel.png "Sobel")
 
+Canny Output: 
 ![Canny](canny.jpg "Canny")
 
 
