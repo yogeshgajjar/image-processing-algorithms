@@ -58,10 +58,21 @@ This will build the executable and to run the executable, follow the steps
 Note - This code executes only RAW images. 
 
 - For Canny edge detection, ensure you know the low and high threshold value. 
+
 <***> = user values to be used.
 
 ``` 
 ./output_canny <low_threshold> <high_threshold> 
 ```
+
+## Output 
+
+- For Sobel edge detection 
+
+![Original](/test_images/Gallery.jpg)
+
+![Sobel](/sobel.png)
+
+![Canny](/canny.jpg)
 
 
