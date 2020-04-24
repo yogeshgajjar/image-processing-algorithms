@@ -1,3 +1,15 @@
+/*
+Version of OS - Ubuntu 18.04.3 LTS
+IDE - Visual Studio Code for C++
+Compiler- g++ (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
+Linker - g++
+Image Viewing Software - ImageJ (http://rsb.info.nih.gov/ij/)
+
+Copyright © 2020 Yogesh Gajjar. All rights reserved.
+
+*/
+
+
 #include "dithering.h"
 #include <iostream>
 #include <vector> 
@@ -159,4 +171,8 @@ unsigned char **Dithering::ditheringMatrix(int a) {
     }
 }
 
+void Dithering::delete2D(unsigned char **image, int h) {
+	for (int i = 0; i < h; i++) delete[] image[i];
+    delete[] image;
+}
 
