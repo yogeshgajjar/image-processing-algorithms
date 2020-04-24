@@ -38,13 +38,13 @@ The index matrix is a 2x2 size which calculates the likelihood of a pixel to be 
 Depending upon the values, certain pixels are turned on and off when this filter is
 convolved over the original input image.
 
-
+For reference [ordered dithering](https://en.wikipedia.org/wiki/Ordered_dithering)
 
 ## Output 
 
 #### Original Image:
 
-![Original](test_image.png "Original")
+![Original|750x500, 20%](test_image.png "Original")
 
 #### Fixed Thresholding Output: 
 
