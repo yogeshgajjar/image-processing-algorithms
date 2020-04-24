@@ -44,12 +44,20 @@ convolved over the original input image.
 
 #### Original Image:
 
-<!-- ![Original](test_image/Gallery.jpg "Original") -->
+![Original](test_image.png "Original")
 
-#### Sobel Output: 
+#### Fixed Thresholding Output: 
 
-![Sobel](dithering/fixed.png "Sobel")
+![Sobel](fixed.png "Sobel")
 
-#### Canny Output: 
+#### Random Thresholding Output: 
 
-![Canny](dithering/random.jpg "Canny")
+![Canny](random.png "Canny")
+
+#### I2 Dithering matrix output 
+
+![I2](i2.png "I2")
+
+#### I8 Dithering matrix output 
+
+![I8](i8.png "I8")
