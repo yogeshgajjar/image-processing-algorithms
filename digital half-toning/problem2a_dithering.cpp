@@ -1,10 +1,5 @@
 
 /*
-#EE569 Homework Assignment #2
-#Date: 4th February 2020
-#Name: Yogesh Sanat Gajjar
-#USCID: 5476153636
-#Email: ygajjar@usc.edu
 
 Version of OS - Ubuntu 18.04.3 LTS
 IDE - Visual Studio Code for C++
@@ -13,7 +8,7 @@ Linker - g++
 Image Viewing Software - ImageJ (http://rsb.info.nih.gov/ij/)
 
 ------------------------------------------------------------------------
-                Problem 2a. Dithering 
+                            Dithering 
 ------------------------------------------------------------------------
 ALGORITHM IMPLEMENTED
 1.  Read the inout image, height, width, BytePerPixel , index_value using command line 
@@ -34,7 +29,6 @@ STEPS TO RUN THE CODE
 
 */ 
 
-
 #include <iostream> 
 #include <algorithm>
 #include <cmath> 
@@ -53,12 +47,12 @@ public:
     void readImage(string, unsigned char *);
     void writeImage(string, unsigned char **);
     void generateImage(unsigned char *);
-    unsigned char **generateMatrix(int, int);
+    void generateMatrix(unsigned char **, int, int);
     unsigned char **fixedThresholding();
     unsigned char **randomThresholding();
-    
     void generateIndexMatrix(int);
     unsigned char **ditheringMatrix(int);
+    ~Dithering();
 
 };
 
@@ -101,9 +95,9 @@ void Dithering::writeImage(string filename, unsigned char **final) {
 
 }
 
-unsigned char **Dithering::generateMatrix(int h, int w) {
+void Dithering::generateMatrix(unsigned char **image, int h, int w) {
     long int count{};
-    unsigned char **image = new unsigned char *[h];
+    image = new unsigned char *[h];
     for(int i=0; i < h; i++) {
         image[i] = new unsigned char [w];
         for(int j=0; j < w; j++) {
@@ -112,7 +106,6 @@ unsigned char **Dithering::generateMatrix(int h, int w) {
         }
     }
     cout << "count: " << count << endl;
-    return image;
 }
 
 void Dithering::generateImage(unsigned char *main_image) {
@@ -128,7 +121,7 @@ void Dithering::generateImage(unsigned char *main_image) {
 }
 
 unsigned char **Dithering::fixedThresholding() {
-    fixedThresh = generateMatrix(height, width);
+    generateMatrix(fixedThresh, height, width); 
     for(int i=0; i < height; i++) {
         for(int j=0; j < width; j++) {
             if(Image[i][j] < 127) fixedThresh[i][j] = 0;
@@ -139,7 +132,7 @@ unsigned char **Dithering::fixedThresholding() {
 }
 
 unsigned char **Dithering::randomThresholding() {
-    randomThresh = generateMatrix(height, width);
+    generateMatrix(randomThresh, height, width);
     unsigned char random{};
     // randomThresh = Image;
     for(int i=0; i < height; i++) {
@@ -157,15 +150,14 @@ unsigned char **Dithering::randomThresholding() {
 void Dithering::generateIndexMatrix(int index) {
     // float matrixI2[2][2] = {{1,3}, {2,0}};
     unsigned char **matrix, **newMatrix;
-    matrixIndexing = generateMatrix(index, index);
+    generateMatrix(matrixIndexing, index, index);
     int count{(log(index) / log(2))}, num{1}; 
     // cout << "Initial count: " << count;
-    matrix = generateMatrix(num, num);  
+    generateMatrix(matrix, num, num);  
     while(count > 0) {
-        cout << "countk: " << count << endl;
         num *= 2;
         newMatrix = matrix;
-        matrix = generateMatrix(num, num);
+        generateMatrix(matrix, num, num);
         for(int i=0; i < num; i++) {
             for(int j=0; j < num; j++) {
                 if(i < num/2 && j < num/2) matrix[i][j] = 4 * newMatrix[i%(num/2)][j%(num/2)] + 1;
@@ -181,10 +173,11 @@ void Dithering::generateIndexMatrix(int index) {
     }
     // indexSize = index;
     matrixIndexing = matrix;
+
 }
 
 unsigned char **Dithering::ditheringMatrix(int a) {
-    ditheringImage = generateMatrix(height, width);
+    generateMatrix(ditheringImage, height, width);
     if(a == 0) {
         indexSize = 2;
         // matrixI2 = generateMatrix(indexSize, indexSize);
@@ -227,6 +220,10 @@ unsigned char **Dithering::ditheringMatrix(int a) {
         }
         return ditheringImage;
     }
+}
+
+Dithering::~Dithering() {
+
 }
 
 int main(int argc, char *argv[]) {
