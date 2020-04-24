@@ -1,3 +1,5 @@
+## Dithering
+
 This method focuses on using either fixed/constant thresholding , random thresholding and
 dithering matrix for transforming the grayscale image into binary image consisting of either
 black or white pixels. The fixed/constant thresholding methods to binarize the image checks
@@ -9,21 +11,24 @@ Index matrix is convolved over the original image and the output value generated
 process. The Bayer matrix are generated recursively and vary in size. Common examples are
 4x4, 8x8, 16x6, 32x32 etc.
 
-Fixed Thresholding
+## Fixed Thresholding
+
 This thresholding utilizes a 127-pixel intensity as the threshold to compare and transform
 the original image pixel intensities into binary pixel intensities. Each pixel value is
 compared with the value 127 and the output image (binarized) is assigned a black dot if
 the pixel value is less than the threshold and a white dot if the pixel value is greater than
 the threshold. The equation for this thresholding can be given as :
 
-Random Thresholding
+## Random Thresholding
+
 This thresholding incorporates randomness in the pixel intensities by selecting the
 threshold randomly. It tries to break the monotones in the result from the fixed
 thresholding. The threshold is selected from a distribution and is used to compare with
 the original image intensity values. If greater that we map it to 255 otherwise we map it
 to zero.
 
-Dithering Matrix
+## Dithering Matrix
+
 To avoid exposed or noisy image outputs obtained from the fixed and random
 thresholding, the dithering matrix is a subtle way to binarize the image. This is also
 called as ordered dithering which works by moving a Bayer matrix of given size over to
@@ -47,4 +52,4 @@ convolved over the original input image.
 
 #### Canny Output: 
 
-![Canny](ditheringrandom.jpg "Canny")
+![Canny](dithering/random.jpg "Canny")
