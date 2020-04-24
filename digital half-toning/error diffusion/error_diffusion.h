@@ -1,3 +1,8 @@
+/*.
+Copyright © 2020 Yogesh Gajjar. All rights reserved.
+*/
+
+
 #include <string>
 #ifndef _ERROR_
 #define _ERROR_

@@ -1,3 +1,8 @@
+/*.
+Copyright © 2020 Yogesh Gajjar. All rights reserved.
+*/
+
+
 #include "error_diffusion.h"
 #include <iostream>
 #include <string>
