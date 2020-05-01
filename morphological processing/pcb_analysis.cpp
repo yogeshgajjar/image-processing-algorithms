@@ -9,25 +9,25 @@ Copyright © 2020 Yogesh Gajjar. All rights reserved.
 
 */
 
-#include "shrinking.h"
+
 #include <iostream>
+#include <vector>
+#include <cmath> 
+#include <algorithm> 
 #include <string>
+#include <unordered_map> 
+#include <map> 
+#include "pcb_analysis.h"
 
-using namespace std;
-
-STK::STK(int h, int w, int win) {
+PCB::PCB(int h, int w, int win) {
     height = h;
     width = w;
     window = win;
     padding = win/2;
-    iterations = 80;
-    condTemp = new int[window*window];
-    uncondTemp = new int[window*window];
-    starCount = new int[iterations];
-
+    iterations = 4;  //4
 }
 
-void STK::readImage(string fileName, unsigned char *image) {
+void PCB::readImage(string fileName, unsigned char *image) {
     FILE *file;
     if (!(file=fopen(fileName.data(),"rb"))) {
 		cout << "Cannot open file: " << fileName.data() <<endl; 
@@ -38,7 +38,7 @@ void STK::readImage(string fileName, unsigned char *image) {
 	fclose(file);
 }
 
-void STK::writeImage(string filename, unsigned char **final) {
+void PCB::writeImage(string filename, unsigned char **final) {
     FILE *file;
 
     unsigned char finalImg[height*width];
@@ -58,7 +58,7 @@ void STK::writeImage(string filename, unsigned char **final) {
 	fclose(file);
 }
 
-unsigned char **STK::generateMatrix2D(int h, int w) {
+unsigned char **PCB::generateMatrix2D(int h, int w) {
     long int count{};
     unsigned char **image = new unsigned char *[h];
     for(int i=0; i < h; i++) {
@@ -71,7 +71,7 @@ unsigned char **STK::generateMatrix2D(int h, int w) {
     return image;
 }
 
-void STK::generateImage(unsigned char *main_image) {
+void PCB::generateImage(unsigned char *main_image) {
     long int count{};
     Image = new unsigned char *[height];
     for(int i = 0; i < height; i++) {
@@ -83,12 +83,12 @@ void STK::generateImage(unsigned char *main_image) {
     }
 }
 
-void STK::delete2D(unsigned char **image, int h) {
+void PCB::delete2D(unsigned char **image, int h) {
 	for (int i = 0; i < h; i++) delete[] image[i];
     delete[] image;
 }
 
-void STK::fixedThresholding() {
+void PCB::fixedThresholding() {
     fixedThresh = generateMatrix2D(height, width);
     for(int i=0; i < height; i++) {
         for(int j=0; j < width; j++) {
@@ -98,7 +98,7 @@ void STK::fixedThresholding() {
     }
 }
 
-unsigned char **STK::boundaryExtension() {
+unsigned char **PCB::boundaryExtension() {
     ImagewithBoundary = generateMatrix2D((2*padding)+height, (2*padding)+width);
 
     long int count{};
@@ -111,7 +111,7 @@ unsigned char **STK::boundaryExtension() {
     return ImagewithBoundary;
 }
 
-int STK::conditionalCheck(char filter, int *C) {
+int PCB::conditionalCheck(char filter, int *C) {
     int flag{};
     string strTemp{};
     string maskS[66] ={"001010000","100010000","000010100","000010001", //S
@@ -122,21 +122,21 @@ int STK::conditionalCheck(char filter, int *C) {
                          "110011001","011110100", //ST
 
                          "011011011","111111000","110110110","000111111", //STK
-
-                         "111011011","011011111","111111100","111111001","111110110","110110111","100111111","001111111", //STK
+                         "111011011","011011111","111111100","111111001", "111110110","110110111","100111111","001111111", //STK
                          "111011111","111111101","111110111","101111111", //STK
                          "001011001","111010000","100110100","000010111", //STK
-                         "111011000","011011001","111110000","110110100","100110110","000110111","000011111","001011011", //STK
+                         "111011000","011011001","111110000","110110100", "100110110","000110111","000011111","001011011", //STK
                          "111011001","111110100","100110111","001011111", //STK
 
                          "010011000","010110000","000110010","000011010", //TK
-                         "111111011","111111110","110111111","011111111"};// K
-    
+                         "111111011","111111110","110111111","011111111"};// K  
+   
     
     if(filter == 'S') {
         for(int i=0; i < 9; i++) {
             strTemp += to_string(C[i]);
             if (strTemp.size() == 9) {
+                // cout << strTemp << endl;
                 for(int j=0; j < 58; j++) {
                     if(strTemp == maskS[j]) flag++;
                 }
@@ -161,10 +161,10 @@ int STK::conditionalCheck(char filter, int *C) {
         }
     }
 
-    return flag;    
+    return flag;       
 }
 
-int STK::unconditionalCheck(string filter, int *U) {
+int PCB::unconditionalCheck(string filter, int *U) {
     int flag{};
     if (filter == "ST"){
         //for spur pattern
@@ -200,6 +200,7 @@ int STK::unconditionalCheck(string filter, int *U) {
         //For Corner cluster pattern
         if(U[0]==1 && U[1]==1 && (U[2]==0 || U[2]==1) && U[3]==1 && U[4]==1 && (U[5]==1 || U[5]==0) && (U[6]==1 || U[6]==0) && (U[7]==1 || U[7]==0) && (U[8]==1 || U[8]==0)) flag++;
 
+
         //For Tee Branch pattern
         if(U[1]==1 && U[2]==0 && U[3]==1 && U[4]==1 && U[5]==1 && U[7]==0 && U[8]==0) flag++;
         if(U[0]==0 && U[1]==1 && U[3]==1 && U[4]==1 && U[5]==1 && U[6]==0 && U[7]==0) flag++;
@@ -217,6 +218,7 @@ int STK::unconditionalCheck(string filter, int *U) {
         if((U[0]==1|| U[3]==1|| U[6]==1) && U[2]==1 && U[4]==1 && U[8]==1) flag++;
 
         //For Diagonal Branch pattern
+
         if((U[0]==1 || U[0]==0) && U[1]==1 && U[2]==0 && U[3]==0 && U[4]==1 && U[5]==1 && U[6]==1 && U[7]==0 && (U[8]==1 || U[8]==0)) flag++;
         if(U[0]==0 && U[1]==1 && (U[2]==1 || U[2]==0) && U[3]==1 && U[4]==1 && U[5]==0 && (U[6]==1 || U[6]==0) && U[7]==0 && U[8]==1) flag++;
         if((U[0]==1 || U[0]==0) && U[1]==0 && U[2]==1 && U[3]==1 && U[4]==1 && U[5]==0 && U[6]==0 && U[7]==1 && (U[8]==1 || U[8]==0)) flag++;
@@ -268,93 +270,101 @@ int STK::unconditionalCheck(string filter, int *U) {
     return flag;
 }
 
-void STK::finalCount() {
+void PCB::finalCount() {
+    int count{};
+    int *condTemp = new int[window*window];
+    int *uncondTemp = new int[window*window];
+    int *starCount = new int[iterations];
+    int *countHoles = new int[window*window];
+    int trial{}, val{}, preVal{};
+    string str;
     M = generateMatrix2D(height, width);
     finalOutput = generateMatrix2D(height, width);
-    vector<int> intermediate;
 
-
-    for(int i=0; i < iterations; i++) {
-        intermediate.push_back(round(iterations/4));
-    }
-
-    
-    for(int p=0; p < iterations; p++) {
+    for(int p = 1; p < iterations; p++) {
         for(int i=0; i < height; i++) {
             for(int j=0; j < width; j++) {
                 if(fixedThresh[i][j] == 1) {
-                    for(int x=0; x < 9; x++) condTemp[x] = 0;
                     int index{0};
                     for(int l= i-1;l <= i+1; l++) {
                         for(int m= j-1; m <= j+1; m++) {
-                            condTemp[index] = fixedThresh[l][m];
+                            int r{l}, c{m};
+                            if(r < 0) r = 0;
+                            if(r > height-1) r = height-1;
+                            if(c < 0) c = 0;
+                            if(c > width-1) c = width-1;
+                            condTemp[index] = (int)fixedThresh[r][c];
                             index++;
                         }
                     }
-                    int count = conditionalCheck('K', condTemp);
-                    if(count == 1) M[i][j] = 1;
+                    int count = conditionalCheck('S', condTemp);
+                    if(count == 1) {
+                        M[i][j] = 1;
+                        trial++;
+                    }
                     else M[i][j] = 0;
                 }
                 else M[i][j] = 0;
             }
         }
-        if( p == iterations/4 ) {
-            stage1ImageRetrival(); 
-            writeImage("stage1_1.raw", M);
-
-        }
-        if (p == iterations/2 ) {
-            stage1ImageRetrival(); 
-            writeImage("stage1_2.raw", M);
-        }
-        if (p == 3*iterations/4 ) {
-            stage1ImageRetrival(); 
-            writeImage("stage1_3.raw", M);
-        }
+        // cout << trial << endl;
         for(int i=0; i < height; i++) {
             for(int j=0; j < width; j++) {
-                if(M[i][j] == 255) M[i][j] == 1;
-            }
-        }
-        for(int i=0; i < height; i++) {
-            for(int j=0; j < width; j++) {
-                if(M[i][j] == 1) {
-                    for(int x = 0; x < 9; x++) uncondTemp[x] = 0;
+                if(M[i][j] == 0) finalOutput[i][j] = fixedThresh[i][j];
+                else {
                     int index{0};
                     for(int l = i-1; l <= i+1; l++) {
                         for(int m = j-1; m <= j+1; m++) {
-                            uncondTemp[index] = M[l][m];
+                            int r{l}, c{m};
+                            if(r < 0) r = 0;
+                            if(r > height-1) r = height-1;
+                            if(c < 0) c = 0;
+                            if(c > width-1) c = width-1;
+                            uncondTemp[index] = (int)M[r][c];
                             index++;
                         }
                     }
-                    int count = unconditionalCheck("K", uncondTemp);
+                    int count = unconditionalCheck("ST", uncondTemp);
                     if(count == 1) finalOutput[i][j] = 1;
                     else finalOutput[i][j] = 0;
                     fixedThresh[i][j] = finalOutput[i][j];
                 }
-                else finalOutput[i][j] = fixedThresh[i][j];
             }
         }
-        if( p == iterations/4 ) {
-            stage2ImageRetrival(); 
-            writeImage("stage2_1.raw", finalOutput);
-
-        }
-        if (p == iterations/2 ) {
-            stage2ImageRetrival(); 
-            writeImage("stage2_2.raw", finalOutput);
-        }
-        if (p == 3*iterations/4 ) {
-            stage2ImageRetrival(); 
-            writeImage("stage2_3.raw", finalOutput);
+        count = 0;
+        for(int i=0; i < height; i++) {
+            for(int j=0; j < width; j++) {
+                if(finalOutput[i][j] == 1) {
+                    int index{0};
+                    for(int l = i-1; l <= i+1; l++) {
+                        for(int m = j-1; m <= j+1; m++) {
+                            int r{l}, c{m};
+                            if(r < 0) r = 0;
+                            if(r > height-1) r = height-1;
+                            if(c < 0) c = 0;
+                            if(c > width-1) c = width-1;
+                            countHoles[index] = (int)finalOutput[r][c];
+                            index++;
+                        }
+                    }
+                    str = "\0";
+                    for(int x=0; x < 9; x++) {
+                        str += to_string(countHoles[x]);
+                    }
+                    if(str == "000010000") count++;
+                }
+            }
         }
     }
+    cout << "Hole count : " << count << endl;
     
-    delete[] condTemp;
-    delete[] uncondTemp;
+    delete condTemp;
+    delete uncondTemp;
+    delete countHoles;
+    delete starCount;
 }
 
-unsigned char **STK::stage2ImageRetrival() {
+unsigned char **PCB::imageRetrival() {
     for(int i=0; i < height; i++) {
         for(int j=0; j < width; j++) {
             finalOutput[i][j] = finalOutput[i][j]*255;
@@ -362,16 +372,3 @@ unsigned char **STK::stage2ImageRetrival() {
     }
     return finalOutput;
 }
-
-void STK::stage1ImageRetrival() {
-
-    for(int i=0; i < height; i++) {
-        for(int j=0; j < width; j++) {
-            M[i][j] = M[i][j] * 255;
-        }
-    }
-    // return M;
-}
-
-
-
