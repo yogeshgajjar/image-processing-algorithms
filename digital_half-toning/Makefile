@@ -1,4 +1,3 @@
-# all: output_canny output_sobel
 all: output_dithering output_errorDiffusion output_halftoning
 
 output_dithering: main_dithering.o dithering.o 
@@ -30,9 +29,3 @@ color_halftoning.o: color_halftoning/color_halftoning.cpp color_halftoning/color
 
 clean:
 	rm *.o output_dithering output_errorDiffusion output_halftoning
-
-# output: dithering.h dithering.cpp main_dithering.cpp
-#     g++ -o dithering main_dithering.cpp dithering.cpp
-
-# clean:
-#     rm output
