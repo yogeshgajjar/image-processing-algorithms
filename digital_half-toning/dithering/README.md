@@ -37,20 +37,20 @@ For reference [ordered dithering](https://en.wikipedia.org/wiki/Ordered_ditherin
 
 #### Original Image:
 
-![Original|750x500, 20%](images/test_image.png =250x375)
+![Original](images/test_image.png) <!-- .element height="50%" width="50%" -->
 
 #### Fixed Thresholding Output: 
 
-![Sobel](images/fixed.png =250x375)
+![Sobel](images/fixed.png) <!-- .element height="50%" width="50%" -->
 
 #### Random Thresholding Output: 
 
-![Canny](images/random.png =250x375)
+![Canny](images/random.png) <!-- .element height="50%" width="50%" -->
 
 #### I2 Dithering matrix output 
 
-![I2](images/i2.png =250x375)
+![I2](images/i2.png) <!-- .element height="50%" width="50%" -->
 
 #### I8 Dithering matrix output 
 
-![I8](images/i8.png =250x375)
+![I8](images/i8.png) <!-- .element height="50%" width="50%" -->
