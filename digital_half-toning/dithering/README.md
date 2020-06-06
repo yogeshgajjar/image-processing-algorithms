@@ -1,15 +1,8 @@
 ## Dithering
 
-This method focuses on using either fixed/constant thresholding , random thresholding and
-dithering matrix for transforming the grayscale image into binary image consisting of either
-black or white pixels. The fixed/constant thresholding methods to binarize the image checks
-for a threshold value. If the pixel value of the original input image is less than the
-fixed/constant threshold, the output image is a black dot. In case of random thresholding,
-the original image pixel when found less than a random value of threshold generated using
-rand() function, gives a black dot. In case of dithering matrix, a Bayer matrix consisting of
-Index matrix is convolved over the original image and the output value generated using the
-process. The Bayer matrix are generated recursively and vary in size. Common examples are
-4x4, 8x8, 16x6, 32x32 etc.
+This method focuses on using either fixed/constant thresholding , random thresholding and dithering matrix for transforming the grayscale image into binary image consisting of either black or white pixels. The fixed/constant thresholding methods to binarize the image checks for a threshold value. If the pixel value of the original input image is less than the fixed/constant threshold, the output image is a black dot. In case of random thresholding,
+the original image pixel when found less than a random value of threshold generated using rand() function, gives a black dot. In case of dithering matrix, a Bayer matrix consisting of Index matrix is convolved over the original image and the output value generated using the
+process. The Bayer matrix are generated recursively and vary in size. Common examples are 4x4, 8x8, 16x6, 32x32 etc.
 
 ## Fixed Thresholding
 
@@ -44,20 +37,20 @@ For reference [ordered dithering](https://en.wikipedia.org/wiki/Ordered_ditherin
 
 #### Original Image:
 
-![Original|750x500, 20%](images/test_image.png "Original")
+![Original|750x500, 20%](images/test_image.png =250x375)
 
 #### Fixed Thresholding Output: 
 
-![Sobel](images/fixed.png "Sobel")
+![Sobel](images/fixed.png =250x375)
 
 #### Random Thresholding Output: 
 
-![Canny](images/random.png "Canny")
+![Canny](images/random.png =250x375)
 
 #### I2 Dithering matrix output 
 
-![I2](images/i2.png "I2")
+![I2](images/i2.png =250x375)
 
 #### I8 Dithering matrix output 
 
-![I8](images/i8.png "I8")
+![I8](images/i8.png =250x375)
