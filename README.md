@@ -1,6 +1,6 @@
-# image-processing-algorithms
+# Image Processing Algorithms 
 
-**Important image processing algorithms from scratch in C++** 
+### **Important image processing algorithms from scratch in C++** 
 
 The algorithms include, 
 
