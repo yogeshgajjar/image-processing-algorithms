@@ -69,7 +69,7 @@ Note - This code executes only RAW images.
 
 #### Original Image:
 
-![Original](test_image/Gallery.jpg "Original")
+![Original](images/Gallery.jpg "Original")
 
 #### Sobel Output: 
 
