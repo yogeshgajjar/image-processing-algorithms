@@ -291,7 +291,7 @@ void STK::finalCount() {
                             index++;
                         }
                     }
-                    int count = conditionalCheck('S', condTemp);
+                    int count = conditionalCheck('K', condTemp);
                     if(count == 1) M[i][j] = 1;
                     else M[i][j] = 0;
                 }
@@ -327,7 +327,7 @@ void STK::finalCount() {
                             index++;
                         }
                     }
-                    int count = unconditionalCheck("ST", uncondTemp);
+                    int count = unconditionalCheck("K", uncondTemp);
                     if(count == 1) finalOutput[i][j] = 1;
                     else finalOutput[i][j] = 0;
                     fixedThresh[i][j] = finalOutput[i][j];
