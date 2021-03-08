@@ -22,6 +22,13 @@ Dithering::Dithering(int h, int w, int i)
 
 }
 
+/*
+Reads the .raw images mentioned in the command line arguments. 
+
+Args
+    string fileName             : The filename having the filename which is in the .raw format. 
+    unsigned char *image        : Pointer pointing to unsigned char which reads the image. 
+*/
 void Dithering::readImage(string fileName, unsigned char *image) {
     FILE *file;
     if (!(file=fopen(fileName.data(),"rb"))) {
@@ -33,7 +40,14 @@ void Dithering::readImage(string fileName, unsigned char *image) {
 	fclose(file);
 }
 
-/* Method to write the image into image format */ 
+
+/*
+Writes the image into .raw format.  
+
+Args
+    string filename             : The output filename which is provided in the command line arguments. 
+    unsigned char **final       : 2D Pointer pointing to unsigned char or called as image matrix. 
+*/
 void Dithering::writeImage(string filename, unsigned char **final) {
     FILE *file;
 
